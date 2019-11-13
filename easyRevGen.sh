@@ -1,4 +1,15 @@
 #!/bin/bash
+
+# Revere shell code generator
+# Author: ooty99 
+# 
+# This simple script is designed to save precious time during the OSCP. I wrote it because I got tired of constantly 
+# copy/pasting one-line reverse shell commands, then opening another terminal pane, using ifconfig, scrolling to tun0,
+# then having to move the cursor around and replace <IP ADDR> and <PORT> in the pasted command. This hopefully cuts down 
+# on some of the extra steps and keeps focus on the exploit. 
+
+# Feel free to modify anything you would like! Good luck.
+
 CYAN='\033[0;36m'
 NOCOLOR='\033[0m'
 
@@ -9,7 +20,7 @@ tun0="$(ip addr show | grep tun0 |grep -o 'inet [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*' 
 # Take user input to set the listening port
 read -p "Enter the port you will listen on: " port
 
-# List generated stuff
+# List out the useful stuff 
 echo "-----------------------------------------------"
 echo "|||||||| Easy Reverse Shell Generator |||||||||"
 echo "-----------------------------------------------"
