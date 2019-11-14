@@ -30,7 +30,7 @@ tun0="$(ip addr show | grep tun0 |grep -o 'inet [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*' 
 # Take user input to set the listening port
 read -p "Enter the port you will listen on: " port
 
-if [ $port -gt 65535]
+if [ $port -gt 65535 ]
 then
   echo "You there are only 65,535 ports to listen on!"
   exit
