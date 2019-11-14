@@ -24,12 +24,13 @@ DIVIDER='\033[1;33m' #Prints yellow text
 NOCOLOR='\033[0m'
 
 
-# Find the IP of the tun0 interface, change tun0 to something else if desired
+# Find the IP of the tun0 interface, change tun0 to another interface if desired
 tun0="$(ip addr show | grep tun0 |grep -o 'inet [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*' | grep -o '[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*')"
 
 # Take user input to set the listening port
 read -p "Enter the port you will listen on: " port
 
+# Ensure port exists
 if [ $port -gt 65535 ]
 then
   echo "You there are only 65,535 ports to listen on!"
